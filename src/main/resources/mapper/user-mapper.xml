@@ -24,6 +24,7 @@
         where username = #{username}
     </select>
 
+
     <select id="selectByEmail" resultType="User">
         select <include refid="selectFields"></include>
         from user
