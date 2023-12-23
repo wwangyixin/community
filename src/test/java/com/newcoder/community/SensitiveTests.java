@@ -24,6 +24,8 @@ public class SensitiveTests {
         System.out.println(text);
 
         text = "这里可以*赌*博，可以&吸&毒&，可以&开&票&，哈哈哈！";
+
+        text = "你好，赌&博";
         text = sensitiveFilter.filter(text);
         System.out.println(text);
     }

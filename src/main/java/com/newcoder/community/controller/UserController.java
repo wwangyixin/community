@@ -107,4 +107,29 @@ public class UserController {
             throw new RuntimeException(e);
         }
     }
+
+    @LoginRequired
+    @RequestMapping(path = "/modify", method = RequestMethod.POST)
+    public String uploadPassword(String oldPassword, String newPassword, String conPassword, Model model) {
+
+        User user = hostHolder.getUser();
+        if (!userService.verifyPassword(user.getId(), oldPassword)) {
+            model.addAttribute("oldPasswordMsg", "密码错误！");
+            return "/site/setting";
+        }
+
+        if (newPassword == null) {
+            model.addAttribute("newPasswordMsg", "密码不能为空！");
+            return "/site/setting";
+        }
+
+        if (!newPassword.equals(conPassword)) {
+            model.addAttribute("conPasswordMsg", "两次输入的密码不一致！");
+            return "/site/setting";
+        }
+
+        userService.updatePassword(user.getId(), newPassword);
+
+        return "redirect:/index";
+    }
 }

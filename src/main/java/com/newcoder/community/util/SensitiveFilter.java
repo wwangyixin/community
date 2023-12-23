@@ -1,7 +1,6 @@
 package com.newcoder.community.util;
 
 import jakarta.annotation.PostConstruct;
-import jdk.internal.icu.impl.Trie;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
