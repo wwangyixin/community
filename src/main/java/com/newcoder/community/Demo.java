@@ -17,5 +17,7 @@ public class demo {
 
         double four_1 = 4 + 21.75; // 不算葛天阳和李新建，可能建筑节能新进展-1建筑遗产保护工程-2
 
+        int one2three_renxuan = 7 + 2; // 9
+        int four_1_renxuan = 2 + 1 + 1 + 1 + 2 + 1 + 1 + 1 + 2 + 1 + 2; // 15 ,可能建筑节能新进展-1建筑遗产保护工程-2
     }
 }
