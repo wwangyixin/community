@@ -1,7 +1,8 @@
 package com.newcoder.community.controller;
 
-import com.newcoder.community.entity.Page;
-import com.newcoder.community.entity.User;
+import com.newcoder.community.entity.*;
+import com.newcoder.community.event.EventProducer;
+import com.newcoder.community.service.DiscussPostService;
 import com.newcoder.community.service.FollowService;
 import com.newcoder.community.service.UserService;
 import com.newcoder.community.util.CommunityConstant;
@@ -28,7 +29,13 @@ public class followController implements CommunityConstant {
     private FollowService followService;
 
     @Autowired
+    private DiscussPostService discussPostService;
+
+    @Autowired
     private HostHolder hostHolder;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     @RequestMapping(path = "/follow", method = RequestMethod.POST)
     @ResponseBody // 异步请求需加上@ResponseBody
@@ -36,6 +43,21 @@ public class followController implements CommunityConstant {
         User user = hostHolder.getUser();
 
         followService.follow(user.getId(), entityType, entityId);
+
+        // 触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(user.getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId);
+        if (entityType == ENTITY_TYPE_POST) {
+            DiscussPost target = discussPostService.findDiscussPostById(entityId);
+            event.setEntityUserId(target.getUserId());
+            event.setData("postId", entityId);
+        } else if (entityType == ENTITY_TYPE_USER) {
+            event.setEntityUserId(entityId);
+        }
+        eventProducer.fireEvent(event);
 
         return CommunityUtil.getJSONString(0, "已关注！");
     }

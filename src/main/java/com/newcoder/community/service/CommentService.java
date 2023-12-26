@@ -56,7 +56,9 @@ public class CommentService implements CommunityConstant {
             discussPostService.updateCommentCount(comment.getEntityId(), count + 1);
         }
         return rows;
+    }
 
-
+    public Comment findCommentById(int id) {
+        return commentMapper.selectCommentById(id);
     }
 }

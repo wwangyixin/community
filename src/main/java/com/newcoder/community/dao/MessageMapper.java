@@ -2,6 +2,7 @@ package com.newcoder.community.dao;
 
 import com.newcoder.community.entity.Message;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.kafka.common.protocol.types.Field;
 
 import java.util.List;
 
@@ -27,4 +28,15 @@ public interface MessageMapper {
 
     int updateStatus(List<Integer> ids, int status);
 
+    // 查询某个主题下最新的通知
+    Message selectLatestNotice(int userId, String topic);
+
+    // 查询某个主题的通知数量
+    int selectNoticeCount(int userId, String topic);
+
+    // 查询某个主题的未读通知数量
+    int selectNoticeUnreadCount(int userId, String topic);
+
+    // 查询某个主题的所有通知
+    List<Message> selectNotices(int userId, String topic, int offset, int limit);
 }
