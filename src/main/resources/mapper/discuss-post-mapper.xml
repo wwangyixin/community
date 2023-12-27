@@ -23,7 +23,7 @@
         limit #{offset}, #{limit}
     </select>
 
-    <select id="selectDiscussPostRows">
+    <select id="selectDiscussPostRows" resultType="Integer">
         select count(*)
         from discuss_post
         where status != 2
@@ -32,12 +32,12 @@
         </if>
     </select>
 
-    <insert id="insertDiscussPost" parameterType="com.newcoder.community.entity.DiscussPost">
+    <insert id="insertDiscussPost" parameterType="DiscussPost" keyProperty="id">
         insert into discuss_post (<include refid="insertFields"></include>)
         values (#{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
     </insert>
 
-    <select id="selectDiscussPostById" resultType="com.newcoder.community.entity.DiscussPost">
+    <select id="selectDiscussPostById" resultType="DiscussPost">
         select <include refid="selectFields"></include>
         from discuss_post
         where id = #{id}

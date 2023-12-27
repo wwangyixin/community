@@ -1,9 +1,11 @@
 package com.newcoder.community.entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.apache.kafka.common.protocol.types.Field;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Event {
 

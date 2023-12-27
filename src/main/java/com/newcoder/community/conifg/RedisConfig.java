@@ -1,7 +1,7 @@
 package com.newcoder.community.conifg;
 
 
-import jakarta.websocket.OnClose;
+import javax.websocket.OnClose;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

@@ -1,6 +1,6 @@
 package com.newcoder.community.controller;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import com.newcoder.community.annotation.LoginRequired;
 import com.newcoder.community.entity.Message;
 import com.newcoder.community.entity.Page;

@@ -1,12 +1,13 @@
 package com.newcoder.community.controller;
 
-import com.alibaba.fastjson2.JSONObject;
+
 import com.newcoder.community.entity.Comment;
 import com.newcoder.community.entity.DiscussPost;
 import com.newcoder.community.entity.Event;
 import com.newcoder.community.event.EventProducer;
 import com.newcoder.community.service.CommentService;
 import com.newcoder.community.service.DiscussPostService;
+import com.newcoder.community.service.ElasticsearchService;
 import com.newcoder.community.service.UserService;
 import com.newcoder.community.util.CommunityConstant;
 import com.newcoder.community.util.HostHolder;
@@ -26,16 +27,18 @@ import java.util.Map;
 public class CommentController implements CommunityConstant {
 
     @Autowired
+    private HostHolder hostHolder;
+
+    @Autowired
     private CommentService commentService;
 
     @Autowired
     private DiscussPostService discussPostService;
 
     @Autowired
-    private HostHolder hostHolder;
-
-    @Autowired
     private EventProducer eventProducer;
+
+
 
     @RequestMapping(path = "/add/{discussPostId}", method = RequestMethod.POST)
     public String addComment(@PathVariable("discussPostId") int discussPostId, Comment comment) {
@@ -60,6 +63,16 @@ public class CommentController implements CommunityConstant {
             event.setEntityUserId(target.getUserId());
         }
         eventProducer.fireEvent(event);
+
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
+            // 触发发帖事件
+            event = (new Event())
+                    .setTopic(TOPIC_PUBLISH)
+                    .setUserId(comment.getUserId())
+                    .setEntityType(ENTITY_TYPE_POST)
+                    .setEntityId(discussPostId);
+            eventProducer.fireEvent(event);
+        }
 
         return "redirect:/discuss/detail/" + discussPostId;
     }

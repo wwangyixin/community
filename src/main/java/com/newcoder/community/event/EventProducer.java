@@ -1,6 +1,7 @@
 package com.newcoder.community.event;
 
-import com.alibaba.fastjson2.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 import com.newcoder.community.entity.Event;
 import com.newcoder.community.util.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;

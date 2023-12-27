@@ -1,8 +1,11 @@
 package com.newcoder.community.entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  * 封装分页相关信息
  */
+
 public class Page {
 
     // 当前页码

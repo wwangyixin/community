@@ -1,6 +1,9 @@
 package com.newcoder.community.entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.Date;
+
 
 public class Comment {
 

@@ -27,7 +27,7 @@
     </select>
 
 
-    <select id="selectConversationCount">
+    <select id="selectConversationCount" resultType="Integer">
         select count(m.maxid) from (
             select max(id) as maxid from message
             where status != 2
@@ -47,7 +47,7 @@
         limit #{offset}, #{limit}
     </select>
 
-    <select id="selectLetterCount">
+    <select id="selectLetterCount" resultType="Integer">
         select count(*)
         from message
         where status != 2
@@ -55,7 +55,7 @@
         and conversation_id = #{conversationId}
     </select>
 
-    <select id="selectLetterUnreadCount">
+    <select id="selectLetterUnreadCount" resultType="Integer">
         select count(*)
         from message
         where status = 0
@@ -77,7 +77,7 @@
         <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
     </update>
 
-    <select id="selectLatestNotice" parameterType="Message">
+    <select id="selectLatestNotice" resultType="Message">
         select <include refid="selectFields"></include>
         from message
         where id in (
@@ -89,7 +89,7 @@
         )
     </select>
 
-    <select id="selectNoticeCount">
+    <select id="selectNoticeCount" resultType="Integer">
         select count(*)
         from message
         where status != 2
@@ -98,7 +98,7 @@
         and conversation_id = #{topic}
     </select>
 
-    <select id="selectNoticeUnreadCount">
+    <select id="selectNoticeUnreadCount" resultType="Integer">
         select count(*)
         from message
         where status = 0
@@ -109,7 +109,7 @@
         </if>
     </select>
 
-    <select id="selectNotices">
+    <select id="selectNotices" resultType="Message">
         select <include refid="selectFields"></include>
         from message
         where status != 2

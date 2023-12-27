@@ -52,6 +52,7 @@ public class HomeController implements CommunityConstant {
                 discussPosts.add(map);
             }
         }
+
         model.addAttribute("discussPosts", discussPosts);
         return "/index";
     }
