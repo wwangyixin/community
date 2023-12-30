@@ -2,6 +2,7 @@ package com.newcoder.community.dao;
 
 import com.newcoder.community.entity.Message;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.kafka.common.protocol.types.Field;
 
 import java.util.List;
@@ -10,33 +11,33 @@ import java.util.List;
 public interface MessageMapper {
 
     // 查询当前用户的会话列表，针对每个会话只返回一条最新的私信
-    List<Message> selectConversations(int userId, int offset, int limit);
+    List<Message> selectConversations(@Param("userId")int userId, @Param("offset")int offset, @Param("limit")int limit);
 
     // 查询当前用户的会话数量
     int selectConversationCount(int userId);
 
     // 查询某个会话所包含的私信列表
-    List<Message> selectLetters(String conversationId, int offset, int limit);
+    List<Message> selectLetters(@Param("conversationId")String conversationId, @Param("offset")int offset, @Param("limit")int limit);
 
     // 查询某个会话所包含的私信数量
     int selectLetterCount(String conversationId);
 
     // 查询未读的私信数量
-    int selectLetterUnreadCount(int userId, String conversationId);
+    int selectLetterUnreadCount(@Param("userId")int userId, @Param("conversationId")String conversationId);
 
     int insertMessage(Message message);
 
-    int updateStatus(List<Integer> ids, int status);
+    int updateStatus(@Param("ids")List<Integer> ids, @Param("status")int status);
 
     // 查询某个主题下最新的通知
-    Message selectLatestNotice(int userId, String topic);
+    Message selectLatestNotice(@Param("userId")int userId, @Param("topic")String topic);
 
     // 查询某个主题的通知数量
-    int selectNoticeCount(int userId, String topic);
+    int selectNoticeCount(@Param("userId")int userId, @Param("topic")String topic);
 
     // 查询某个主题的未读通知数量
-    int selectNoticeUnreadCount(int userId, String topic);
+    int selectNoticeUnreadCount(@Param("userId")int userId, @Param("topic")String topic);
 
     // 查询某个主题的所有通知
-    List<Message> selectNotices(int userId, String topic, int offset, int limit);
+    List<Message> selectNotices(@Param("userId")int userId, @Param("topic")String topic, @Param("offset")int offset, @Param("limit")int limit);
 }

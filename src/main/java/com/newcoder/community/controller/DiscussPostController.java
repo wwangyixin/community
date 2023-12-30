@@ -160,4 +160,70 @@ public class DiscussPostController implements CommunityConstant{
 
         return "/site/discuss-detail";
     }
+
+    // 置顶
+    @RequestMapping(path = "/top", method = RequestMethod.POST)
+    @ResponseBody
+    public String setTop(int id) {
+        User user = hostHolder.getUser();
+//        if (user == null) {
+//            return CommunityUtil.getJSONString(403, "您还没有登录！");
+//        }
+
+        discussPostService.updateType(id, 1);
+
+        // 触发事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(discussPostService.findDiscussPostById(id).getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(id);
+        eventProducer.fireEvent(event);
+
+        return CommunityUtil.getJSONString(0, "置顶成功！");
+    }
+
+    // 加精
+    @RequestMapping(path = "/wonderful", method = RequestMethod.POST)
+    @ResponseBody
+    public String setWonderful(int id) {
+        User user = hostHolder.getUser();
+//        if (user == null) {
+//            return CommunityUtil.getJSONString(403, "您还没有登录！");
+//        }
+
+        discussPostService.updateStatus(id, 1);
+
+        // 触发事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(discussPostService.findDiscussPostById(id).getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(id);
+        eventProducer.fireEvent(event);
+
+        return CommunityUtil.getJSONString(0, "加精成功！");
+    }
+
+    // 删除
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public String setDelete(int id) {
+        User user = hostHolder.getUser();
+//        if (user == null) {
+//            return CommunityUtil.getJSONString(403, "您还没有登录！");
+//        }
+
+        discussPostService.updateStatus(id, 2);
+
+        // 触发事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(discussPostService.findDiscussPostById(id).getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(id);
+        eventProducer.fireEvent(event);
+
+        return CommunityUtil.getJSONString(0, "删除成功！");
+    }
 }
